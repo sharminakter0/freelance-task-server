@@ -9,6 +9,13 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json()) 
 
+// 1 change *********** nicy 2nd line cilo***********
+app.get('/',(req ,res)=>{
+    res.send(" my server connecting ")
+})
+
+// *********************8
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.oeflzv2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -23,7 +30,11 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-   await client.connect();
+
+    // change
+    // ***********************
+  //  await client.connect();
+  // **********************
 
 
       const taskCollection = client.db("taskDB").collection("tasks")
@@ -49,7 +60,7 @@ async function run() {
 
 
 
-    // delete
+   
  // DELETE a task by ID
 app.delete('/tasks/:id', async (req, res) => {
   const id = req.params.id;
@@ -134,9 +145,7 @@ app.delete('/tasks/:id', async (req, res) => {
 }
 run().catch(console.dir);
 
-app.get('/',(req ,res)=>{
-    res.send(" my server connecting ")
-})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
